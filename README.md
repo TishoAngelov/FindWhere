@@ -1,2 +1,1 @@
 # FindWhere
-FindWhere is application for sharing the location of many different buildings. For example: restaurants, Malls, grocery stores, banks, hospitals and etc. The work time of the buildings is stored in the database too. Not logged in users cant search the database for all it's locations. Registered users can add new places. They will need a definite count of approved new places from the administrator before they can add new locations without approval. The application will be very useful for small stores for which you cannot find information in the Internet.
