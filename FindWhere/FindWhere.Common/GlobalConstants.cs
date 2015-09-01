@@ -2,8 +2,8 @@
 {
     public static class GlobalConstants
     {
-        public static string[] AllowedCountries = ["България"];
+        public static string[] AllowedCountries = { "България" };
 
-        public static string[] AllowedCities = ["София"];
+        public static string[] AllowedCities = { "София" };
     }
 }
