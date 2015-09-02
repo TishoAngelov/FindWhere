@@ -8,7 +8,8 @@
 
     public class FindWhereDbContext : IdentityDbContext<User>
     {
-        public FindWhereDbContext() : base("DefaultConnection")
+        // AppharbourConnection
+        public FindWhereDbContext() : base("AppharbourConnection")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<FindWhereDbContext, Configuration>());
         }
