@@ -8,9 +8,9 @@
 
     public class FindWhereDbContext : IdentityDbContext<User>
     {
-        // AppharbourConnection - use it before commit
+        // AppharborConnection - use it before commit
         // DefaultConnection
-        public FindWhereDbContext() : base("AppharbourConnection")
+        public FindWhereDbContext() : base("DefaultConnection")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<FindWhereDbContext, Configuration>());
         }
