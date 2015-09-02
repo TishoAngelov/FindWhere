@@ -57,6 +57,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\CodeFirstConventions\IsUnicodeAttributeConvention.cs" />
+    <Compile Include="Contracts\DataAnnotations\IsUnicodeAttribute.cs" />
     <Compile Include="FindWhereDbContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,6 +68,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FindWhere.Common\FindWhere.Common.csproj">
+      <Project>{b6a39f09-56f9-4a5b-bdc5-e56e0b70d5a5}</Project>
+      <Name>FindWhere.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FindWhere.Model\FindWhere.Model.csproj">
       <Project>{81c51c77-3df4-41d9-b96a-5d88ba59b83e}</Project>
       <Name>FindWhere.Model</Name>

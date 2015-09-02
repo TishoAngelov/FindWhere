@@ -25,6 +25,7 @@ namespace FindWhere.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/modern-business.css",
                       "~/Content/site.css"));
         }
     }

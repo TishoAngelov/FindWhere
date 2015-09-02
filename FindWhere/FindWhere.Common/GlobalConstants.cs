@@ -2,7 +2,7 @@
 {
     public static class GlobalConstants
     {
-        // todo: fix the type
+        // TODO
         public static string[] AllowedCountries = { "България" };
 
         public static string[] AllowedCities = { "София" };

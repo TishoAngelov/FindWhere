@@ -2,31 +2,70 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    @Html.Submit()
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+@*Header Carousel*@
+<header id="myCarousel" class="carousel slide">
+    @*Indicators*@
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+    </ol>
+    @*Wrapper for slides*@
+    <div class="carousel-inner">
+        <div class="item active">
+            <div class="fill" style="background-image:url('../../Content/Images/Slider/Location.jpg');"></div>
+            <div class="carousel-caption">
+                <h2>Searching for a shop?</h2>
+            </div>
+        </div>
+        <div class="item">
+            <div class="fill" style="background-image:url('../../Content/Images/Slider/sofia-panroama-ndk.jpg');"></div>
+            <div class="carousel-caption">
+                <h2>Find a shop in Sofia!</h2>
+            </div>
+        </div>
+    </div>
+    @*Controls*@
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+        <span class="icon-prev"></span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+        <span class="icon-next"></span>
+    </a>
+</header>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+@*Newly added locations*@
+@for (int i = 0; i < 3; i++)
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="page-header">Modern Business Features</h2>
+        </div>
+        <div class="col-md-6">
+            <p>The Modern Business template by Start Bootstrap includes:</p>
+            <ul>
+                <li>
+                    <strong>Bootstrap v3.2.0</strong>
+                </li>
+                <li>jQuery v1.11.0</li>
+                <li>Font Awesome v4.1.0</li>
+                <li>Working PHP contact form with validation</li>
+                <li>Unstyled page elements for easy customization</li>
+                <li>17 HTML pages</li>
+            </ul>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, omnis doloremque non cum id reprehenderit, quisquam totam aspernatur tempora minima unde aliquid ea culpa sunt. Reiciendis quia dolorum ducimus unde.</p>
+            <a class="btn btn-primary" href="portfolio-item.html">TODO: View details</a>
+        </div>
+        <div class="col-md-6">
+            <img class="img-responsive" src="http://placehold.it/700x450" alt="">
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+}
+
+@section scripts {
+    @*Script to Activate the Carousel*@
+    <script>
+        $('.carousel').carousel({
+            interval: 5000
+        })
+    </script>
+}
