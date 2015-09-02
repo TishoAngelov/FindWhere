@@ -14,8 +14,6 @@ namespace FindWhere.Web.Controllers
         [OutputCache(Duration = 1)]
         public ActionResult Index()
         {
-            var c = context.Countries.ToList();
-
             return View();
         }
 
