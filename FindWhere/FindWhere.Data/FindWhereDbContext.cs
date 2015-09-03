@@ -10,7 +10,7 @@
     {
         // AppharborConnection - use it before commit
         // DefaultConnection
-        public FindWhereDbContext() : base("DefaultConnection")
+        public FindWhereDbContext() : base("AppharborConnection")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<FindWhereDbContext, Configuration>());
         }
