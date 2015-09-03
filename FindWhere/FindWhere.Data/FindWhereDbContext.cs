@@ -34,5 +34,15 @@
 
         // TODO: Add all models
         public virtual IDbSet<Country> Countries { get; set; }
+
+        public virtual IDbSet<City> Cities { get; set; }
+
+        public virtual IDbSet<Neighbourhood> Neighbourhoods { get; set; }
+
+        public virtual IDbSet<Location> Locations { get; set; }
+
+        public virtual IDbSet<Category> Categories { get; set; }
+
+        public virtual IDbSet<ShoppingCenter> ShoppingCenters { get; set; }
     }
 }

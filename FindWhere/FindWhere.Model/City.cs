@@ -18,12 +18,13 @@
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
-
+        
+        // Relational
         public virtual int CountryId { get; set; }
 
         public virtual Country Country { get; set; }
 
-        public ICollection<Neighbourhood> Neighbourhoods
+        public virtual ICollection<Neighbourhood> Neighbourhoods
         {
             get { return this.neighbourhoods; }
             set { this.neighbourhoods = value; }

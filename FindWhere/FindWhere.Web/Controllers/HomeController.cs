@@ -1,12 +1,8 @@
-﻿using FindWhere.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace FindWhere.Web.Controllers
+﻿namespace FindWhere.Web.Controllers
 {
+    using System.Web.Mvc;
+    using FindWhere.Data;
+
     public class HomeController : BaseController
     {
         private FindWhereDbContext context = FindWhereDbContext.Create();

@@ -4,13 +4,13 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class Country
+    public class Category
     {
-        private ICollection<City> cities;
+        private ICollection<ShoppingCenter> shoppingCenters;
 
-        public Country()
+        public Category()
         {
-            this.cities = new HashSet<City>();
+            this.shoppingCenters = new HashSet<ShoppingCenter>();
         }
 
         [Key]
@@ -22,10 +22,10 @@
         public string Name { get; set; }
 
         // Relational
-        public virtual ICollection<City> Cities
+        public virtual ICollection<ShoppingCenter> ShoppingCenters
         {
-            get { return this.cities; }
-            set { this.cities = value; }
+            get { return this.shoppingCenters; }
+            set { this.shoppingCenters = value; }
         }
     }
 }

@@ -265,6 +265,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FindWhere.Common\FindWhere.Common.csproj">
+      <Project>{b6a39f09-56f9-4a5b-bdc5-e56e0b70d5a5}</Project>
+      <Name>FindWhere.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FindWhere.Data\FindWhere.Data.csproj">
       <Project>{dff87739-fa55-4fa8-b83c-bedee4e67076}</Project>
       <Name>FindWhere.Data</Name>

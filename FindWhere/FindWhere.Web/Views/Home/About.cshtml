@@ -50,15 +50,20 @@
                                 clickable: true
                             });
 
-                            marker.addListener('click', function (event) {
-                                infowindow.open(map, marker);
-                            });
+                            var latitude = results[0].geometry.location.lat();
+                            var longitude = results[0].geometry.location.lng();
 
                             infowindow.setContent('Formated addres: ' + results[0].formatted_address +
                                                '<br />Country: ' + normalizedLocation.country +
                                                '<br />City: ' + normalizedLocation.city +
                                                '<br />Neighbourhood: ' + normalizedLocation.neighbourhood +
+                                               '<br />Latitude: ' + latitude +
+                                               '<br />Longitude: ' + longitude +
                                                '<br />Place ID: ' + normalizedLocation.placeId);
+
+                            marker.addListener('click', function (event) {
+                                infowindow.open(map, marker);
+                            });                        
 
                             callback(marker);
                         }, animationTimeout);
@@ -71,11 +76,11 @@
                             clickable: true
                         });
 
+                        infowindow.setContent('Incorrect location!');
+
                         marker.addListener('click', function (event) {
                             infowindow.open(map, marker);
-                        });
-
-                        infowindow.setContent('Incorrect location!');
+                        });                        
 
                         callback(marker);
                     }

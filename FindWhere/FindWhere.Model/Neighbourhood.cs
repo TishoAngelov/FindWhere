@@ -18,7 +18,8 @@
         [Required]
         [MaxLength(150)]
         public string Name { get; set; }
-        
+
+        // Relational
         public virtual int CityId { get; set; }
 
         public virtual City City { get; set; }
