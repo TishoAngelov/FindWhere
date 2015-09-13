@@ -15,7 +15,7 @@ using FindWhere.Common;
 namespace FindWhere.Web.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -73,6 +73,15 @@ namespace FindWhere.Web.Controllers
             if (!ModelState.IsValid)
             {
                 return View(model);
+            }
+
+            var user = this.Context.Users.FirstOrDefault(u => u.Email == model.Email);
+            if (user != null)
+            {
+                if (user.IsBanned)
+                {
+                    return RedirectWithError("Home", "Index", "Login attempt failed! This user is banned.");
+                }
             }
 
             // This doesn't count login failures towards account lockout

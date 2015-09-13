@@ -1,0 +1,32 @@
+﻿@model IEnumerable<User>
+
+@{
+    ViewBag.Title = "Manage users";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Ajax.BeginForm("Search", null,
+        new AjaxOptions
+        {
+            UpdateTargetId = "results",
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST"
+        }, new { id = "searchForm", @class = "form-group" }))
+{
+    <label class="form-label">Search by e-mail: </label>
+    <input type="text" name="query" class="form-control" oninput="changed()" />
+}
+
+<div id="results">
+    @Html.Partial("_UsersSearchPartial", Model)
+</div>
+
+
+@section customScripts {
+    <script>
+        function changed() {
+            $("#searchForm").submit();
+        }
+    </script>
+}

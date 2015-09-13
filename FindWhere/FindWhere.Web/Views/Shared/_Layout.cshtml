@@ -9,6 +9,7 @@
     <title>@ViewBag.Title - Find Where</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("customStyles", false)
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -36,20 +37,46 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">TODO <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="portfolio-1-col.html">TODO </a></li>
-                        </ul>
-                    </li>
+                    @if (User.IsInRole(UserRoles.Moderator))
+                    {
+                        // TODO: allow to approve
+                    }
+
+                    @if (User.IsInRole(UserRoles.Admin))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("All categories", "Index", "Categories")</li>
+                                <li>@Html.ActionLink("Add new", "Create", "Categories")</li>
+                            </ul>
+                        </li>
+                        <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                    }
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </nav>
     <div class="container body-content">
-        <!-- For success/fail messages -->
-        <div id="success"></div>
+        @*For success/fail messages*@
+        @if (TempData["success"] != null)
+        {
+            <div id="success" class="alert alert-success fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                @TempData["success"]
+            </div>
+        }
+
+        @if (TempData["error"] != null)
+        {
+            <div id="error" class="alert alert-danger fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                @TempData["error"]
+            </div>
+        }
+
         @RenderBody()
         <hr />
         <footer>
@@ -64,5 +91,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @RenderSection("customScripts", required: false)
 </body>
 </html>

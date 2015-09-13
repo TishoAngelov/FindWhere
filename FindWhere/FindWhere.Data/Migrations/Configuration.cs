@@ -119,6 +119,11 @@
 
         private void SeedLocations(FindWhereDbContext context)
         {
+            if (context.Locations.Any())
+            {
+                return;
+            }
+
             var admin = context.Users.FirstOrDefault(u => u.Email == "admin@admin.bg");
             var studentCity = context.Neighbourhoods.FirstOrDefault(n => n.Name == "ж.к. Студентски град");
             var supermarket = context.Categories.FirstOrDefault(c => c.Name == "Supermarket");
@@ -132,8 +137,8 @@
                     {
                         FullAddress = "улица „Антон Найденов“ 12, 1700 София, България",
                         IsApproved = true,
-                        Latitude =  42.65000430000001M,
-                        Longitude = 23.341308099999992M,
+                        Latitude =  42.65000430000001,
+                        Longitude = 23.341308099999992,
                         Neighbourhood = studentCity,
                         PlaceId = "ChIJAYbEYT2EqkARgwXjrjbxAGI",
                         Rating = 10,
@@ -149,8 +154,8 @@
                     {
                         FullAddress = "улица „акад. Борис Стефанов\" 14, 1700 София, България",
                         IsApproved = true,
-                        Latitude =  42.6483173M,
-                        Longitude = 23.341426700000056M,
+                        Latitude =  42.6483173,
+                        Longitude = 23.341426700000056,
                         Neighbourhood = studentCity,
                         PlaceId = "ChIJzbcojxeEqkARYzcWSVJqs8k",
                         Rating = 8,

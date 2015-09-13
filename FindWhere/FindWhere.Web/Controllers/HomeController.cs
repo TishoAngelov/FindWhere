@@ -2,35 +2,37 @@
 {
     using System.Web.Mvc;
     using FindWhere.Data;
+    using Model;
+    using System.Linq;
 
     public class HomeController : BaseController
     {
-        private FindWhereDbContext context = FindWhereDbContext.Create();
-
         [OutputCache(Duration = 1)]
         public ActionResult Index()
         {
-            return View();
+            var latestLocations = this.Context.Locations
+                .Where(l => l.IsApproved)
+                .Where(l => l.User.IsBanned == false)
+                .Where(l => l.ShoppingCenter.IsClosed == false)
+                .OrderBy(l => l.AddedOn)
+                .Take(10)
+                .ToList();
+
+            return View(latestLocations);
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
 
         public ActionResult Faq()
         {
-            ViewBag.Message = "Your Faq page.";
-
             return View();
         }
     }

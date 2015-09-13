@@ -18,6 +18,8 @@
 
         public bool IsBanned { get; set; }
 
+        public int ApprovedLocationsCount { get; set; }
+
         // Relational
         public virtual ICollection<Location> Locations
         {

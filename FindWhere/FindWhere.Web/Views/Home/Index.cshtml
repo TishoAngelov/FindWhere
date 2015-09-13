@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<Location>
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -14,13 +16,13 @@
         <div class="item active">
             <div class="fill" style="background-image:url('../../Content/Images/Slider/Location.jpg');"></div>
             <div class="carousel-caption">
-                <h2>Searching for a shop?</h2>
+                <h2>Searching for a shopping center?</h2>
             </div>
         </div>
         <div class="item">
             <div class="fill" style="background-image:url('../../Content/Images/Slider/sofia-panroama-ndk.jpg');"></div>
             <div class="carousel-caption">
-                <h2>Find a shop in Sofia!</h2>
+                <h2>Find a shopping center in Sofia!</h2>
             </div>
         </div>
     </div>
@@ -33,35 +35,13 @@
     </a>
 </header>
 
-@*Newly added locations*@
-@for (int i = 0; i < 3; i++)
+@*Last added locations*@
+@for (int i = 0; i < Model.Count; i++)
 {
-    <div class="row">
-        <div class="col-lg-12">
-            <h2 class="page-header">Modern Business Features</h2>
-        </div>
-        <div class="col-md-6">
-            <p>The Modern Business template by Start Bootstrap includes:</p>
-            <ul>
-                <li>
-                    <strong>Bootstrap v3.2.0</strong>
-                </li>
-                <li>jQuery v1.11.0</li>
-                <li>Font Awesome v4.1.0</li>
-                <li>Working PHP contact form with validation</li>
-                <li>Unstyled page elements for easy customization</li>
-                <li>17 HTML pages</li>
-            </ul>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, omnis doloremque non cum id reprehenderit, quisquam totam aspernatur tempora minima unde aliquid ea culpa sunt. Reiciendis quia dolorum ducimus unde.</p>
-            <a class="btn btn-primary" href="portfolio-item.html">TODO: View details</a>
-        </div>
-        <div class="col-md-6">
-            <img class="img-responsive" src="http://placehold.it/700x450" alt="">
-        </div>
-    </div>
+    Html.RenderPartial("_LocationOverview", Model[i]);
 }
 
-@section scripts {
+@section customScripts {
     @*Script to Activate the Carousel*@
     <script>
         $('.carousel').carousel({
