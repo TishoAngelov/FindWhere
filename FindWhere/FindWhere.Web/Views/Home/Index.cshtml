@@ -1,51 +1,11 @@
-﻿@model List<Location>
+﻿@model IEnumerable<Location>
 
 @{
     ViewBag.Title = "Home Page";
 }
 
 @*Header Carousel*@
-<header id="myCarousel" class="carousel slide">
-    @*Indicators*@
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-    </ol>
-    @*Wrapper for slides*@
-    <div class="carousel-inner">
-        <div class="item active">
-            <div class="fill" style="background-image:url('../../Content/Images/Slider/Location.jpg');"></div>
-            <div class="carousel-caption">
-                <h2>Searching for a shopping center?</h2>
-            </div>
-        </div>
-        <div class="item">
-            <div class="fill" style="background-image:url('../../Content/Images/Slider/sofia-panroama-ndk.jpg');"></div>
-            <div class="carousel-caption">
-                <h2>Find a shopping center in Sofia!</h2>
-            </div>
-        </div>
-    </div>
-    @*Controls*@
-    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-        <span class="icon-prev"></span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-        <span class="icon-next"></span>
-    </a>
-</header>
+@Html.Partial("_CarouselPartial")
 
 @*Last added locations*@
-@for (int i = 0; i < Model.Count; i++)
-{
-    Html.RenderPartial("_LocationOverview", Model[i]);
-}
-
-@section customScripts {
-    @*Script to Activate the Carousel*@
-    <script>
-        $('.carousel').carousel({
-            interval: 5000
-        })
-    </script>
-}
+@Html.Partial("_LocationsOverviewPartial", Model)

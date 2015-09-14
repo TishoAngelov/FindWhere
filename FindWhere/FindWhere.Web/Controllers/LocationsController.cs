@@ -1,5 +1,6 @@
 ﻿namespace FindWhere.Web.Controllers
 {
+    using Common;
     using FindWhere.Data;
     using FindWhere.Model;
     using System;
@@ -8,15 +9,41 @@
     using System.Net;
     using System.Web.Mvc;
 
-    public class LocationsController : Controller
+    public class LocationsController : BaseController
     {
         private FindWhereDbContext db = new FindWhereDbContext();
 
-        // GET: Locations
-        public ActionResult Index()
-        {
-            var locations = db.Locations.Include(l => l.Neighbourhood).Include(l => l.ShoppingCenter).Include(l => l.User);
-            return View(locations.ToList());
+        // GET: Locations/Page/3
+        public ActionResult Index(int id = 1)
+        {            
+            var locations = this.Context.Locations
+                .Where(l => l.IsApproved)
+                .Where(l => l.ShoppingCenter.IsClosed == false)
+                .OrderBy(l => l.AddedOn)
+                .Skip((id - 1) * GlobalConstants.LocationsPerPage)
+                .Take(GlobalConstants.LocationsPerPage)
+                .ToList();
+
+            var locationsCount = this.Context.Locations
+                .Where(l => l.IsApproved)
+                .Where(l => l.ShoppingCenter.IsClosed == false)
+                .Count();
+
+            ViewBag.Pages = locationsCount / GlobalConstants.LocationsPerPage + 1;
+            ViewBag.CurrentPage = id;
+
+            if (id <= 0)
+            {
+                ViewBag.CurrentPage = 1;
+            }
+
+            if (id >= ViewBag.Pages)
+            {
+                ViewBag.CurrentPage = ViewBag.Pages;
+            }
+
+            //var locations = db.Locations.Include(l => l.Neighbourhood).Include(l => l.ShoppingCenter).Include(l => l.User);
+            return View(locations);
         }
 
         // GET: Locations/Details/5

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Location>
+
+@foreach (var location in Model)
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="page-header">
+                <span style="color: red;">[New]</span>
+                <span>@location.FullAddress</span>
+            </h2>
+        </div>
+        <div class="col-md-6">
+            <p>The Modern Business template by Start Bootstrap includes:</p>
+            <ul>
+                <li>
+                    <strong>Bootstrap v3.2.0</strong>
+                </li>
+                <li>jQuery v1.11.0</li>
+                <li>Font Awesome v4.1.0</li>
+                <li>Working PHP contact form with validation</li>
+                <li>Unstyled page elements for easy customization</li>
+                <li>17 HTML pages</li>
+            </ul>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, omnis doloremque non cum id reprehenderit, quisquam totam aspernatur tempora minima unde aliquid ea culpa sunt. Reiciendis quia dolorum ducimus unde.</p>
+            ---- TODO:<br />
+            @location.FullAddress<br />
+            Added on: @location.AddedOn<br />
+            by @location.User.UserName<br />
+            @*@location.Neighbourhood.Name<br />
+                @location.ShoppingCenter.WorkTime<br />
+                @location.ShoppingCenter.Details<br />
+                @location.ShoppingCenter.Category.Name<br />*@
+            ----<br />
+            <a class="btn btn-primary" href="~/Locations/Details/@location.Id">View details</a>
+        </div>
+        <div class="col-md-6">
+            <a href="~/Locations/Details/@location.Id">
+                <img class="img-responsive"
+                     src="https://maps.googleapis.com/maps/api/staticmap?size=700x450&markers=color:red%7Clabel:S%7C@(location.Latitude),@location.Longitude"
+                     alt="Location on map"
+                     style="cursor: pointer;" />
+            </a>
+        </div>
+    </div>
+}
+
+@if (ViewBag.Pages != null && ViewBag.CurrentPage != null)
+{
+    @*Pagination*@
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <ul class="pagination">
+                @if (ViewBag.CurrentPage > 1)
+                {
+                    <li><a href="~/Locations/Index/@(ViewBag.CurrentPage - 1)">&laquo;</a></li>
+                }
+
+                @for (int p = 1; p <= ViewBag.Pages; p++)
+                {
+                    if (ViewBag.CurrentPage == p)
+                    {
+                        <li class="active"><a href="~/Locations/Index/@p">@p</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="~/Locations/Index/@p">@p</a></li>
+                    }
+                }
+
+                @if (ViewBag.CurrentPage < ViewBag.Pages)
+                {
+                    <li><a href="~/Locations/Index/@(ViewBag.CurrentPage + 1)">&raquo;</a></li>
+                }
+
+            </ul>
+        </div>
+    </div>
+}

@@ -6,5 +6,7 @@
         public static string[] AllowedCountries = { "България" };
 
         public static string[] AllowedCities = { "София" };
+
+        public static int LocationsPerPage = 1;
     }
 }

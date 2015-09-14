@@ -141,7 +141,6 @@
                         Longitude = 23.341308099999992,
                         Neighbourhood = studentCity,
                         PlaceId = "ChIJAYbEYT2EqkARgwXjrjbxAGI",
-                        Rating = 10,
                         ShoppingCenter = new ShoppingCenter
                             {
                                 Category = supermarket,
@@ -158,7 +157,6 @@
                         Longitude = 23.341426700000056,
                         Neighbourhood = studentCity,
                         PlaceId = "ChIJzbcojxeEqkARYzcWSVJqs8k",
-                        Rating = 8,
                         ShoppingCenter = new ShoppingCenter
                             {
                                 Category = householdGoods,

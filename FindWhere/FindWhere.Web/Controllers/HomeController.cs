@@ -4,6 +4,7 @@
     using FindWhere.Data;
     using Model;
     using System.Linq;
+    using Common;
 
     public class HomeController : BaseController
     {

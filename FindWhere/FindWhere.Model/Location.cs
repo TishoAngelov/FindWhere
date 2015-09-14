@@ -32,8 +32,8 @@
         public string PlaceId { get; set; }     // From Google maps API
 
         public bool IsApproved { get; set; }
-        
-        public int Rating { get; set; }
+
+        // TODO: Rating.
 
         public DateTime AddedOn { get; set; }
 
@@ -48,7 +48,7 @@
         public virtual int NeighbourhoodId { get; set; }
 
         public virtual Neighbourhood Neighbourhood { get; set; }
-        
+
         public virtual ShoppingCenter ShoppingCenter { get; set; }
     }
 }

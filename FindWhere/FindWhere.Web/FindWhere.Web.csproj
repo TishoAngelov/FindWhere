@@ -226,6 +226,7 @@
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
     <None Include="Views\Home\Faq.cshtml" />
+    <Content Include="Views\Locations\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -267,10 +268,10 @@
     <Content Include="Views\Locations\Delete.cshtml" />
     <Content Include="Views\Locations\Details.cshtml" />
     <Content Include="Views\Locations\Edit.cshtml" />
-    <Content Include="Views\Locations\Index.cshtml" />
-    <Content Include="Views\Shared\_LocationOverview.cshtml" />
+    <Content Include="Views\Shared\_LocationsOverviewPartial.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\_UsersSearchPartial.cshtml" />
+    <Content Include="Views\Shared\_CarouselPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
