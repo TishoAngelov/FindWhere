@@ -6,7 +6,7 @@
 
     [Log]
     [Authorize(Roles = UserRoles.Admin)]
-    public abstract class AdminController : ModeratorController
+    public abstract class ModeratorController : BaseController
     {
 
     }

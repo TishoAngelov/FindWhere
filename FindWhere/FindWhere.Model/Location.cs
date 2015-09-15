@@ -27,8 +27,7 @@
 
         [Required]
         public string FullAddress { get; set; }
-
-        [Required]
+        
         public string PlaceId { get; set; }     // From Google maps API
 
         public bool IsApproved { get; set; }

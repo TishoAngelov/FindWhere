@@ -13,7 +13,6 @@
         {
             var latestLocations = this.Context.Locations
                 .Where(l => l.IsApproved)
-                .Where(l => l.User.IsBanned == false)
                 .Where(l => l.ShoppingCenter.IsClosed == false)
                 .OrderBy(l => l.AddedOn)
                 .Take(10)

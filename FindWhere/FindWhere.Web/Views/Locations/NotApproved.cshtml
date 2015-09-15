@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Location>
+@{
+    ViewBag.Title = "Not approved locations";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<table class="table">
+    <tr>
+        <th>Full address</th>
+        <th>Neighbourhood</th>
+        <th>Added on</th>
+        <th>Added by</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Neighbourhood.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Email)
+            </td>
+            <td>
+                <a class="btn btn-primary" href="~/Locations/Details/@item.Id">View details</a>
+            </td>
+        </tr>
+    }
+
+</table>

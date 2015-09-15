@@ -1,13 +1,12 @@
 ﻿namespace FindWhere.Web.Controllers
 {
-    using FindWhere.Data;
     using FindWhere.Model;
     using System.Data.Entity;
     using System.Linq;
     using System.Net;
     using System.Web.Mvc;
 
-    public class CategoriesController : BaseController
+    public class CategoriesController : AdminController
     {
         // GET: Categories
         public ActionResult Index()

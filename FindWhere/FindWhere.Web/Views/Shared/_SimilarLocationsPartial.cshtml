@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Location>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h4 class="page-header">Similar locations by neighbourhood</h4>
+    </div>
+
+    @foreach (var location in Model)
+    {
+        <div class="col-sm-3 col-xs-6">
+            <a href="~/Locations/Details/@location.Id">
+                <img class="img-responsive img-hover"
+                     src="https://maps.googleapis.com/maps/api/staticmap?size=500x300&markers=color:red%7Clabel:S%7C@(location.Latitude),@location.Longitude"
+                     alt="Location on map" />
+            </a>
+        </div>
+    }
+
+</div>

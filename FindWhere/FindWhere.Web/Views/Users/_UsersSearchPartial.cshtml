@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<User>
 
 <table class="table">
-    <tr>        
+    <tr>
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
@@ -16,7 +16,7 @@
 
     @foreach (var item in Model)
     {
-        <tr>            
+        <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
@@ -40,13 +40,21 @@
                 }
                 else
                 {
-                    using (Html.BeginForm("Ban", "Users", FormMethod.Post))
+                    using (Html.BeginForm("Ban", "Users", FormMethod.Post, new { style = "padding-left: 5px; display: inline-block;" }))
                     {
                         @Html.AntiForgeryToken()
 
                         <input type="text" hidden="hidden" name="id" value="@item.Id" />
                         <input type="submit" class="btn btn-danger" value="Ban" />
                     }
+
+                    using (Html.BeginForm("MakeModerator", "Users", FormMethod.Post, new { style = "padding-left: 5px; display: inline-block;" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <input type="text" hidden="hidden" name="id" value="@item.Id" />
+                        <input type="submit" class="btn btn-success" value="Make moderator" />
+                    }                    
                 }
             </td>
         </tr>

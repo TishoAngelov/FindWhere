@@ -1,98 +1,74 @@
 ﻿@model FindWhere.Model.Location
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Location details";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Location</h4>
+    <h3>@ViewBag.Title</h3>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Neighbourhood.Name)
-        </dt>
+    <div class="row">
+        <div class="col-md-8" style="display: inline-block; width: 750px; height: 400px;" id="map"></div>
+        <dl class="dl-horizontal col-md-4" style="display: inline-block; vertical-align: top;">
+            <dt>Address</dt>
+            <dd>@Html.DisplayFor(model => model.FullAddress)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Neighbourhood.Name)
-        </dd>
+            <dt>Category</dt>
+            <dd>@Html.DisplayFor(model => model.ShoppingCenter.Category.Name)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ShoppingCenter.WorkTime)
-        </dt>
+            <dt>Worktime</dt>
+            <dd>@Html.DisplayFor(model => model.ShoppingCenter.WorkTime)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ShoppingCenter.WorkTime)
-        </dd>
+            <dt>Added by</dt>
+            <dd>@Html.DisplayFor(model => model.User.Email)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.User.Email)
-        </dt>
+            <dt>Neighbourhood</dt>
+            <dd>@Html.DisplayFor(model => model.Neighbourhood.Name)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.User.Email)
-        </dd>
+            <dt>City</dt>
+            <dd>@Html.DisplayFor(model => model.Neighbourhood.City.Name)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Latitude)
-        </dt>
+            <dt>Country</dt>
+            <dd>@Html.DisplayFor(model => model.Neighbourhood.City.Country.Name)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Latitude)
-        </dd>
+            <dt>Added on</dt>
+            <dd>@Html.DisplayFor(model => model.AddedOn)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Longitude)
-        </dt>
+            <dt>Modified on</dt>
+            <dd>@Html.DisplayFor(model => model.ModifiedOn)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Longitude)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FullAddress)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FullAddress)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PlaceId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PlaceId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsApproved)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsApproved)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AddedOn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AddedOn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedOn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedOn)
-        </dd>
-
-    </dl>
+            <dt>Details</dt>
+            <dd>@Html.DisplayFor(model => model.ShoppingCenter.Details)</dd>
+        </dl>
+        @if (Model.IsApproved == false && (User.IsInRole(UserRoles.Moderator) || User.IsInRole(UserRoles.Admin)))
+        {
+            <div class="pull-right">
+                <a class="btn btn-primary" href="~/Locations/Approve/@Model.Id">Approve</a>
+            </div>
+        }
+    </div>
+    <div class="row">
+        @Html.Action("SimilarByNeighbourhood", new { id = Model.Neighbourhood.Id })
+    </div>
 </div>
+<br />
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+@section customScripts {
+    <script src="~/Scripts/Site/google.maps.helpers.js"></script>
+    <script>
+        function initMap() {
+            var location = { lat: @Model.Latitude, lng: @Model.Longitude };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 18,
+                center: location
+            });
+
+            setLocationOnMap(map, location);
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap&language=bg" async defer></script>
+}

@@ -44,11 +44,12 @@
                             @if (Request.IsAuthenticated)
                             {
                                 <li>@Html.ActionLink("Add new", "Create", "Locations")</li>
+                                // TODO: User's locations.
                             }
 
                             @if (User.IsInRole(UserRoles.Moderator))
                             {
-                                // TODO: allow to approve
+                                <li>@Html.ActionLink("Not approved", "NotApproved", "Locations")</li>
                             }
 
                             @if (User.IsInRole(UserRoles.Admin))

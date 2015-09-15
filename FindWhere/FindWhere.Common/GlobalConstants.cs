@@ -8,5 +8,7 @@
         public static string[] AllowedCities = { "София" };
 
         public static int LocationsPerPage = 1;
+
+        public static int NeededLocationsToBecomeModerator = 30;
     }
 }

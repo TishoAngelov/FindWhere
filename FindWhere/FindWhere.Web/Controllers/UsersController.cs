@@ -1,8 +1,11 @@
 ﻿namespace FindWhere.Web.Controllers
 {
     using Common;
+    using Model;
+    using Microsoft.AspNet.Identity;
     using System.Linq;
     using System.Web.Mvc;
+    using Microsoft.AspNet.Identity.EntityFramework;
 
     public class UsersController : AdminController
     {
@@ -50,6 +53,32 @@
             this.Context.SaveChanges();
 
             return this.RedirectWithSuccess("Users", "Index", "User successfuly banned!");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MakeModerator(string id)
+        {
+            var user = this.Context.Users.AsQueryable().FirstOrDefault(u => u.Id == id);
+
+            if (user == null)
+            {
+                return this.RedirectWithError("Users", "Index", "Something went wrong! Please try again later.");
+            }
+
+            var moderatorRole = this.Context.Roles.FirstOrDefault(r => r.Name == UserRoles.Moderator);
+
+            if (!user.Roles.Any(r => r.RoleId == moderatorRole.Id) && user.IsBanned == false)
+            {
+                var userManager = new UserManager<User>(new UserStore<User>(this.Context));
+                userManager.AddToRole(user.Id, UserRoles.Moderator);
+
+                this.Context.SaveChanges();
+
+                return this.RedirectWithSuccess("Users", "Index", "User added to role moderator!");
+            }
+
+            return this.RedirectWithError("Users", "Index", "The user is already in role moderator or is banned!");
         }
     }
 }
