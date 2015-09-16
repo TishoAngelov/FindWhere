@@ -2,13 +2,12 @@
 {
     public static class GlobalConstants
     {
-        // TODO
         public static string[] AllowedCountries = { "България" };
 
         public static string[] AllowedCities = { "София" };
 
         public static int LocationsPerPage = 1;
 
-        public static int NeededLocationsToBecomeModerator = 30;
+        public static int NeededLocationsToBecomeModerator = 10;
     }
 }

@@ -21,6 +21,7 @@
         [Key]
         public Guid Id { get; set; }
 
+        [Required(ErrorMessage= "The selected location is incorrect!")]
         public double Latitude { get; set; }
 
         public double Longitude { get; set; }
@@ -39,7 +40,6 @@
         public DateTime? ModifiedOn { get; set; }
 
         // Relational
-        [Required]
         public virtual string UserId { get; set; }
 
         public virtual User User { get; set; }

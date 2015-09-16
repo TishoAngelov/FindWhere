@@ -1,6 +1,7 @@
 ﻿namespace FindWhere.Web.Controllers
 {
     using FindWhere.Model;
+    using System;
     using System.Data.Entity;
     using System.Linq;
     using System.Net;
@@ -46,10 +47,16 @@
         {
             if (ModelState.IsValid)
             {
+                if (this.Context.Categories.Any(c => c.Name == category.Name))
+                {
+                    return this.RedirectWithError("Categories", "Create", "The category already exists!");
+                }
+
                 this.Context.Categories.Add(category);
+                
                 this.Context.SaveChanges();
 
-                return this.RedirectWithSuccess("Categories", "Create", "New category successfuly added!");
+                return this.RedirectWithSuccess("Categories", "Index", "New category successfuly added!");
             }
 
             return View(category);

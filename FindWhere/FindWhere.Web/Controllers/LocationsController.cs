@@ -19,7 +19,7 @@
             var locations = this.Context.Locations
                 .Where(l => l.IsApproved)
                 .Where(l => l.ShoppingCenter.IsClosed == false)
-                .OrderBy(l => l.AddedOn)
+                .OrderByDescending(l => l.AddedOn)
                 .Skip((id - 1) * GlobalConstants.LocationsPerPage)
                 .Take(GlobalConstants.LocationsPerPage)
                 .ToList();
@@ -63,14 +63,15 @@
             }
 
             // Prevent the normal user to see not approved locations.
-            if (location.IsApproved == false && User.IsInRole(UserRoles.User))
+            if (location.IsApproved == false && !User.IsInRole(UserRoles.Moderator) && !User.IsInRole(UserRoles.Admin))
             {
-                return Redirect("Index");
+                return RedirectToAction("Index");
             }
 
             return View(location);
         }
 
+        // GET: Locations/SimilarByNeighbourhood/GuidId
         [HttpGet]
         [ChildActionOnly]
         public ActionResult SimilarByNeighbourhood(int id)
@@ -123,11 +124,11 @@
             var msg = "Location successfuly approved!";
 
             // Make the user moderator if he reaches the needed number of approved locations for that role.
-            if (User.IsInRole(UserRoles.User) && location.User.ApprovedLocationsCount >= GlobalConstants.NeededLocationsToBecomeModerator)
+            if (!User.IsInRole(UserRoles.Moderator) && !User.IsInRole(UserRoles.Admin) && location.User.ApprovedLocationsCount >= GlobalConstants.NeededLocationsToBecomeModerator)
             {
                 var userManager = new UserManager<User>(new UserStore<User>(this.Context));
                 userManager.AddToRole(location.User.Id, UserRoles.Moderator);
-                msg += "\r\nCongratulations! You have reached the needed count of approved locations and you have become a Moderator!";
+                msg += "\r\nThe user \" " + location.User.Email + "\"have reached the needed count of approved locations and has become a Moderator!";
             }
 
             this.Context.SaveChanges();
@@ -139,7 +140,9 @@
         [Authorize]
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(this.Context.Categories, "Id", "Name");
+            ViewBag.CategoryId = new SelectList(this.Context.Categories
+                .Where(c => c.Name != null)
+                .OrderBy(c => c.Name), "Id", "Name");
 
             return View();
         }
@@ -150,23 +153,61 @@
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        // [Bind(Include = "Id,Latitude,Longitude,FullAddress,PlaceId,IsApproved,Rating,AddedOn,ModifiedOn,UserId,NeighbourhoodId")] 
         public ActionResult Create(Location location)
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.CategoryId = new SelectList(this.Context.Categories, "Id", "Name", location.ShoppingCenter.CategoryId);
+                ViewBag.CategoryId = new SelectList(this.Context.Categories
+                    .Where(c => c.Name != null)
+                    .OrderBy(c => c.Name), "Id", "Name", location.ShoppingCenter.CategoryId);
 
                 return View(location);
             }
 
-            // TODO
-            //location.Id = Guid.NewGuid();
-            //this.Context.Locations.Add(location);
+            var neighbourhood = this.Context.Neighbourhoods.FirstOrDefault(n => n.Name == location.Neighbourhood.Name);
+            if (neighbourhood == null)
+            {
+                var sofia = this.Context.Cities.FirstOrDefault(c => c.Name == "София");
 
-            //this.Context.SaveChanges();
+                neighbourhood = new Neighbourhood
+                {
+                    City = sofia,
+                    Name = location.Neighbourhood.Name
+                };
+            }
 
-            return this.RedirectWithSuccess("Locations", "Index", "New location successfuly added!");
+            var newLocation = new Location
+            {
+                FullAddress = location.FullAddress,
+                IsApproved = false,
+                Latitude = location.Latitude,
+                Longitude = location.Longitude,
+                Neighbourhood = neighbourhood,
+                PlaceId = location.PlaceId,
+                ShoppingCenter = new ShoppingCenter
+                {
+                    CategoryId = location.ShoppingCenter.Category.Id,
+                    Details = location.ShoppingCenter.Details,
+                    WorkTime = location.ShoppingCenter.WorkTime
+                }
+            };
+
+            if (User.IsInRole(UserRoles.Moderator) || User.IsInRole(UserRoles.Admin))
+            {
+                newLocation.IsApproved = true;
+            }
+
+            string msg = "New location successfuly added!";
+            if (newLocation.IsApproved == false)
+            {
+                msg += "\r\nThe location needs to be approved by Moderator before it can be visible for everyone.";
+            }
+
+            this.CurrentUser.Locations.Add(newLocation);
+
+            this.Context.SaveChanges();
+
+            return this.RedirectWithSuccess("Locations", "Index", msg);
         }
 
         // GET: Locations/Edit/GuidId

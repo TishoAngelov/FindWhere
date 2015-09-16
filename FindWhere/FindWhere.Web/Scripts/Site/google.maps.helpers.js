@@ -1,4 +1,4 @@
-﻿// returns the set marker
+﻿// Returns an object with the set marker and additional information about the selected location (latitude, neighbourhood, placeId etc.).
 function setLocationOnMap(map, location, oldMarker, callback) {
     var geocoder = new google.maps.Geocoder;
     var infowindow = new google.maps.InfoWindow;
@@ -15,7 +15,16 @@ function setLocationOnMap(map, location, oldMarker, callback) {
             var infoWindowAppearTimeout = 1200;
             var animationTimeout = 200;
 
+            var locationDetails = {
+                fullAddress: null,
+                latitude: null,
+                longitude: null,
+                neighbourhood: null,
+                placeId: null
+            };
+
             // TODO: Add validation for allowed city and country.
+            // If the selected location is allowed location.
             if (normalizedLocation.country && normalizedLocation.city && normalizedLocation.neighbourhood) {
                 window.setTimeout(function () {
                     marker = new google.maps.Marker({
@@ -27,6 +36,12 @@ function setLocationOnMap(map, location, oldMarker, callback) {
 
                     var latitude = results[0].geometry.location.lat();
                     var longitude = results[0].geometry.location.lng();
+
+                    locationDetails.fullAddress = results[0].formatted_address;
+                    locationDetails.latitude = latitude;
+                    locationDetails.longitude = longitude;
+                    locationDetails.neighbourhood = normalizedLocation.neighbourhood;
+                    locationDetails.placeId = normalizedLocation.placeId;
 
                     infowindow.setContent('Formated addres: ' + results[0].formatted_address +
                                        '<br />Country: ' + normalizedLocation.country +
@@ -41,7 +56,7 @@ function setLocationOnMap(map, location, oldMarker, callback) {
                     });
 
                     if (callback != null) {
-                        callback(marker);
+                        callback(marker, locationDetails);
                     }
                 }, animationTimeout);
             } else {
@@ -59,14 +74,14 @@ function setLocationOnMap(map, location, oldMarker, callback) {
                     infowindow.open(map, marker);
                 });
 
-                callback(marker);
+                callback(marker, locationDetails);
             }
 
             window.setTimeout(function () {
                 infowindow.open(map, marker);
             }, infoWindowAppearTimeout);
         } else {
-            callback(marker);
+            callback(marker, locationDetails);
         }
     });
 }

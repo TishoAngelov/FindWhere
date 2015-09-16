@@ -14,7 +14,7 @@
             var latestLocations = this.Context.Locations
                 .Where(l => l.IsApproved)
                 .Where(l => l.ShoppingCenter.IsClosed == false)
-                .OrderBy(l => l.AddedOn)
+                .OrderByDescending(l => l.AddedOn)
                 .Take(10)
                 .ToList();
 

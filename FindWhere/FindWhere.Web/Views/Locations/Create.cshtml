@@ -15,11 +15,11 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         </div>
         <div class="row">
-            <div class="col-md-6" style="display: inline-block;">
+            <div class="col-md-4" style="display: inline-block;">
                 <div class="form-group">
                     @Html.LabelFor(model => model.ShoppingCenter.CategoryId, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.ShoppingCenter.Category.Id, ViewBag.CategoryId as SelectList, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.ShoppingCenter.CategoryId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.ShoppingCenter.WorkTime, "Worktime", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.ShoppingCenter.WorkTime, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.ShoppingCenter.WorkTime, new { htmlAttributes = new { @class = "form-control", placeholder = "HH:MM - HH:MM" } })
                         @Html.ValidationMessageFor(model => model.ShoppingCenter.WorkTime, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                 <div class="form-group">
                     <div class="col-md-10">
                         @Html.HiddenFor(model => model.FullAddress, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.FullAddress, "", new { @class = "text-danger" })
+                        @*@Html.ValidationMessageFor(model => model.FullAddress, "", new { @class = "text-danger" })*@
                     </div>
                 </div>
 
@@ -58,21 +58,21 @@
                 <div class="form-group">
                     <div class="col-md-10">
                         @Html.HiddenFor(model => model.Longitude, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Longitude, "", new { @class = "text-danger" })
+                        @*@Html.ValidationMessageFor(model => model.Longitude, "", new { @class = "text-danger" })*@
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-md-10">
                         @Html.HiddenFor(model => model.Neighbourhood.Name, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Neighbourhood.Name, "", new { @class = "text-danger" })
+                        @*@Html.ValidationMessageFor(model => model.Neighbourhood.Name, "", new { @class = "text-danger" })*@
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-md-10">
                         @Html.HiddenFor(model => model.PlaceId, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.PlaceId, "", new { @class = "text-danger" })
+                        @*@Html.ValidationMessageFor(model => model.PlaceId, "", new { @class = "text-danger" })*@
                     </div>
                 </div>
                 @*End hidden*@
@@ -83,8 +83,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6" style="display: inline-block;">
-                TODO: Add map here.
+            <div class="col-md-8" style="display: inline-block;">
+                <div style="width: 750px; height: 500px;" id="map"></div>
             </div>
         </div>
     </div>
@@ -96,4 +96,31 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/Site/google.maps.helpers.js"></script>
+    <script>
+        function initMap() {
+            var sofiaLocation = { lat: 42.6967353, lng: 23.3258133 };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 14,
+                center: sofiaLocation
+            });
+            var oldMarker = null;
+
+            map.addListener('click', function (event) {
+                var location = event.latLng;
+
+                setLocationOnMap(map, location, oldMarker, function (marker, locationDetails) {
+                    oldMarker = marker;
+
+                    // Fill the hidden input with the location details.
+                    $('#FullAddress').val(locationDetails.fullAddress);
+                    $('#Latitude').val(locationDetails.latitude);
+                    $('#Longitude').val(locationDetails.longitude);
+                    $('#Neighbourhood_Name').val(locationDetails.neighbourhood);
+                    $('#PlaceId').val(locationDetails.placeId);
+                });
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap&language=bg" async defer></script>
 }

@@ -2,29 +2,5 @@
     ViewBag.Title = "About";
 }
 <h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<div style="width: 900px; height: 500px;" id="map"></div>
-
-@section customScripts {
-    <script src="~/Scripts/Site/google.maps.helpers.js"></script>
-    <script>
-        function initMap() {
-            var sofiaLocation = { lat: 42.6967353, lng: 23.3258133 };
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 14,
-                center: sofiaLocation
-            });
-            var oldMarker = null;
-
-            map.addListener('click', function (event) {
-                var location = event.latLng;
-
-                setLocationOnMap(map, location, oldMarker, function (marker) {
-                    oldMarker = marker;
-                });
-            });
-        }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap&language=bg" async defer></script>
-}
+<p>TODO</p>
