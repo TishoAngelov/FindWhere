@@ -41,9 +41,9 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Locations <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("All locations", "Index", "Locations")</li>
+                            <li>@Html.ActionLink("Add new", "Create", "Locations")</li>
                             @if (Request.IsAuthenticated)
                             {
-                                <li>@Html.ActionLink("Add new", "Create", "Locations")</li>
                                 // TODO: User's locations.
                             }
 
