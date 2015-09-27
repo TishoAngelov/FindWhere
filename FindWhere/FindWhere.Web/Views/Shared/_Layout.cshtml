@@ -41,6 +41,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Locations <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("All locations", "Index", "Locations")</li>
+                            <li>@Html.ActionLink("Search", "Search", "Locations")</li>
                             <li>@Html.ActionLink("Add new", "Create", "Locations")</li>
                             @if (Request.IsAuthenticated)
                             {
@@ -108,5 +109,10 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     @RenderSection("customScripts", required: false)
+    <script>
+        $('.carousel').carousel({
+            interval: 5000
+        })
+    </script>
 </body>
 </html>

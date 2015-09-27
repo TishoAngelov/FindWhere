@@ -5,7 +5,7 @@
     using System.Web.Mvc;
 
     [Log]
-    [Authorize(Roles = UserRoles.Admin)]
+    [Authorize(Roles = UserRoles.Moderator)]
     public abstract class ModeratorController : BaseController
     {
 

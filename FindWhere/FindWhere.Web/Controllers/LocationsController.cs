@@ -43,8 +43,7 @@
             {
                 ViewBag.CurrentPage = ViewBag.Pages;
             }
-
-            //var locations = db.Locations.Include(l => l.Neighbourhood).Include(l => l.ShoppingCenter).Include(l => l.User);
+            
             return View(locations);
         }
 
@@ -86,6 +85,19 @@
                 .ToList();
 
             return PartialView("_SimilarLocationsPartial", locationsByNeighbourhood);
+        }
+
+        [HttpGet]
+        public ActionResult Search()
+        {
+            var locations = this.Context.Locations
+                .AsQueryable()
+                .ToList();
+
+            ViewBag.CategoryId = new SelectList(this.Context.Categories
+                .OrderBy(c => c.Name), "Id", "Name");
+
+            return View(locations);
         }
 
         // GET: Categories/NotApproved

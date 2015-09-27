@@ -24,7 +24,7 @@
             // TODO: Seed data for all models.
             this.SeedUsers(context);
 
-            this.SeedRoles(context);    // Shouled be called after seeding the users!!!
+            this.SeedRoles(context);    // Should be called after seeding the users!!!
 
             this.SeedCountries(context);
             this.SeedCities(context);
