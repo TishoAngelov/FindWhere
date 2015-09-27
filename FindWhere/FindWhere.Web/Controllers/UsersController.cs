@@ -16,7 +16,7 @@
 
             return View(users);
         }
-        
+
         // POST: Users/Search/text
         [HttpPost]
         public ActionResult Search(string query)

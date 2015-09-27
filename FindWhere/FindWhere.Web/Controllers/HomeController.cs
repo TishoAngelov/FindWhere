@@ -1,10 +1,7 @@
 ﻿namespace FindWhere.Web.Controllers
 {
-    using System.Web.Mvc;
-    using FindWhere.Data;
-    using Model;
     using System.Linq;
-    using Common;
+    using System.Web.Mvc;
 
     public class HomeController : BaseController
     {

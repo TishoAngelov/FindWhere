@@ -7,13 +7,15 @@
     {
         [HttpGet]
         [ChildActionOnly]
-        public ActionResult List()
+        public ActionResult List(int? id)
         {
             var neighborhoods = this.Context.Neighbourhoods
                 .AsQueryable()
                 .Where(n => n.Locations.Count() > 0)
                 .OrderBy(c => c.Name)
                 .ToList();
+
+            ViewBag.NeighborhoodId = id;
 
             return PartialView("_NeighborhoodsListSidebarPartial", neighborhoods);
         }

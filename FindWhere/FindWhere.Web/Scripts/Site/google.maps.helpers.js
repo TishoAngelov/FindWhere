@@ -14,6 +14,8 @@ function setLocationOnMap(map, location, oldMarker, callback) {
             var errorMarkerIcon = '/Content/Images/GoogleMapsMarkers/close.png';
             var infoWindowAppearTimeout = 1200;
             var animationTimeout = 200;
+            var allowedCountries = ['Bulgaria'];
+            var allowedCities = ['Sofia'];
 
             var locationDetails = {
                 fullAddress: null,
@@ -23,9 +25,10 @@ function setLocationOnMap(map, location, oldMarker, callback) {
                 placeId: null
             };
 
-            // TODO: Add validation for allowed city and country.
             // If the selected location is allowed location.
-            if (normalizedLocation.country && normalizedLocation.city && normalizedLocation.neighbourhood) {
+            if (normalizedLocation.country && normalizedLocation.city && normalizedLocation.neighbourhood
+                    && allowedCountries.indexOf(normalizedLocation.country) != -1
+                    && allowedCities.indexOf(normalizedLocation.city) != -1) {
                 window.setTimeout(function () {
                     marker = new google.maps.Marker({
                         map: map,
@@ -43,7 +46,7 @@ function setLocationOnMap(map, location, oldMarker, callback) {
                     locationDetails.neighbourhood = normalizedLocation.neighbourhood;
                     locationDetails.placeId = normalizedLocation.placeId;
 
-                    infowindow.setContent('Formated addres: ' + results[0].formatted_address +
+                    infowindow.setContent('Addresс: ' + results[0].formatted_address +
                                        '<br />Country: ' + normalizedLocation.country +
                                        '<br />City: ' + normalizedLocation.city +
                                        '<br />Neighbourhood: ' + normalizedLocation.neighbourhood +

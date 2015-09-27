@@ -21,7 +21,6 @@
         {
             // The Seed method will be called after migrating to the latest version.
 
-            // TODO: Seed data for all models.
             this.SeedUsers(context);
 
             this.SeedRoles(context);    // Should be called after seeding the users!!!
@@ -40,7 +39,7 @@
                 return;
             }
 
-            context.Countries.Add(new Country { Name = "България" });
+            context.Countries.Add(new Country { Name = "Bulgaria" });
 
             context.SaveChanges();
         }
@@ -52,8 +51,8 @@
                 return;
             }
 
-            var bulgaria = context.Countries.FirstOrDefault(c => c.Name == "България");
-            var sofia = new City { Name = "София" };
+            var bulgaria = context.Countries.FirstOrDefault(c => c.Name == "Bulgaria");
+            var sofia = new City { Name = "Sofia" };
 
             if (bulgaria != null)
             {
@@ -72,12 +71,10 @@
 
             var neighbourhoods = new List<Neighbourhood>
             {
-                new Neighbourhood { Name = "7-ми 11-ти километър" },
-                new Neighbourhood { Name = "ж.к. Студентски град" },
-                new Neighbourhood { Name = "ж.к. Дианабад" }
+                new Neighbourhood { Name = "Studentski grad" }
             };
 
-            var sofia = context.Cities.FirstOrDefault(c => c.Name == "София");
+            var sofia = context.Cities.FirstOrDefault(c => c.Name == "Sofia");
             if (sofia != null)
             {
                 foreach (var item in neighbourhoods)
@@ -99,6 +96,7 @@
 
             var categories = new List<Category>
             {
+                new Category { Name = null },
                 new Category { Name = "Other" },
                 new Category { Name = "Supermarket" },
                 new Category { Name = "Pharmacy" },
@@ -125,7 +123,7 @@
             }
 
             var admin = context.Users.FirstOrDefault(u => u.Email == "admin@admin.bg");
-            var studentCity = context.Neighbourhoods.FirstOrDefault(n => n.Name == "ж.к. Студентски град");
+            var studentCity = context.Neighbourhoods.FirstOrDefault(n => n.Name == "Studentski grad");
             var supermarket = context.Categories.FirstOrDefault(c => c.Name == "Supermarket");
             var householdGoods = context.Categories.FirstOrDefault(c => c.Name == "Household Goods");
 
@@ -135,7 +133,7 @@
                 {
                     new Location
                     {
-                        FullAddress = "улица „Антон Найденов“ 12, 1700 София, България",
+                        FullAddress = "ul. \"Anton Naydenov\" 12, 1700 Sofia, Bulgaria",
                         IsApproved = true,
                         Latitude =  42.65000430000001,
                         Longitude = 23.341308099999992,
@@ -151,7 +149,7 @@
                     },
                     new Location
                     {
-                        FullAddress = "улица „акад. Борис Стефанов\" 14, 1700 София, България",
+                        FullAddress = "ulitsa \"Akademik Boris Stefanov\" 14, 1700 Sofia, Bulgaria",
                         IsApproved = true,
                         Latitude =  42.6483173,
                         Longitude = 23.341426700000056,

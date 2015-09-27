@@ -21,14 +21,14 @@
         [Key]
         public Guid Id { get; set; }
 
-        [Required(ErrorMessage= "The selected location is incorrect!")]
+        [Required(ErrorMessage = "The selected location is incorrect!")]
         public double Latitude { get; set; }
 
         public double Longitude { get; set; }
 
         [Required]
         public string FullAddress { get; set; }
-        
+
         public string PlaceId { get; set; }     // From Google maps API
 
         public bool IsApproved { get; set; }

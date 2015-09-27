@@ -5,15 +5,48 @@
 
 <div class="row">
     <div class="col-md-3">
-        <div class="affix" style="margin-top: 30px;">
-            <button type="button" class="btn btn-primary btn-lg" style="width: 100%">Search</button>
-            <h3>Category</h3>
-            @Html.DropDownList("CategoryId", ViewBag.CategoryId as SelectList, htmlAttributes: new { @class = "form-control" })
-            <hr />
-            @Html.Action("List", "Neighborhoods")
+        <div style="margin-top: 30px;">
+            @using (Html.BeginForm("Search", "Locations", null, FormMethod.Get))
+            {
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%">Search</button>
+                <h3>Category</h3>
+                @Html.DropDownList("CategoryId", ViewBag.CategoryId as SelectList, htmlAttributes: new { @class = "form-control" })
+                <hr />
+                @Html.Action("List", "Neighborhoods", new { id = ViewBag.NeighborhoodId })
+            }
         </div>
     </div>
     <div class="col-md-9">
-        @Html.Partial("_LocationsOverviewPartial", Model)
+        @if (Model.Count() == 0)
+        {
+            <h1>No results</h1>
+        }
+        else
+        {
+            @Html.Partial("_LocationsOverviewPartial", Model)
+        }
     </div>
 </div>
+
+@section customScripts {
+    <script>
+        $('#neighborhoodsList').click(function (e) {
+            var $previousListItem = $('#neighborhoodsList a.active');
+            var $selectedListItem = $(e.target);
+            var newId = $selectedListItem.attr('id').split('-')[1];
+
+            var $input = $('#selectedNeighborhoodId');
+
+            if ($previousListItem[0]) {
+                $previousListItem.removeClass('active');
+            }
+
+            if ($previousListItem.attr('id') === $selectedListItem.attr('id')) {
+                $input.removeAttr('value');
+            } else {
+                $input.val(newId);
+                $selectedListItem.addClass('active');
+            }
+        })
+    </script>
+}

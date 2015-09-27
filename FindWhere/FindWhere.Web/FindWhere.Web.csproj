@@ -286,9 +286,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="ViewModels\Categories\" />
     <Folder Include="ViewModels\Locations\" />
-    <Folder Include="Views\Admin\" />
-    <Folder Include="Views\Base\" />
-    <Folder Include="Views\Moderator\" />
     <Folder Include="Views\Neighborhoods\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
     <Folder Include="Views\Shared\EditorTemplates\" />

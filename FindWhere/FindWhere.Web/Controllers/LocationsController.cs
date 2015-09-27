@@ -1,7 +1,6 @@
 ﻿namespace FindWhere.Web.Controllers
 {
     using Common;
-    using FindWhere.Data;
     using FindWhere.Model;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
@@ -88,16 +87,29 @@
         }
 
         [HttpGet]
-        public ActionResult Search()
+        public ActionResult Search(int? CategoryId, int? NeighborhoodId)
         {
             var locations = this.Context.Locations
-                .AsQueryable()
-                .ToList();
+                .AsQueryable();
+
+            var selectedCategory = Context.Categories.FirstOrDefault(c => c.Id == CategoryId);
+
+            if (selectedCategory != null && selectedCategory.Name != null)
+            {
+                locations = locations.Where(l => l.ShoppingCenter.CategoryId == CategoryId);
+            }
+
+            if (NeighborhoodId != null)
+            {
+                locations = locations.Where(l => l.NeighbourhoodId == NeighborhoodId);
+            }
 
             ViewBag.CategoryId = new SelectList(this.Context.Categories
                 .OrderBy(c => c.Name), "Id", "Name");
 
-            return View(locations);
+            ViewBag.NeighborhoodId = NeighborhoodId;
+
+            return View(locations.ToList());
         }
 
         // GET: Categories/NotApproved
@@ -160,8 +172,6 @@
         }
 
         // POST: Locations/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -179,7 +189,7 @@
             var neighbourhood = this.Context.Neighbourhoods.FirstOrDefault(n => n.Name == location.Neighbourhood.Name);
             if (neighbourhood == null)
             {
-                var sofia = this.Context.Cities.FirstOrDefault(c => c.Name == "София");
+                var sofia = this.Context.Cities.FirstOrDefault(c => c.Name == "Sofia");
 
                 neighbourhood = new Neighbourhood
                 {
